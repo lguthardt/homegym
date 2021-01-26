@@ -14,7 +14,6 @@ namespace HomeGymManager
     {
         public ChangeRestSound()
         {
-            //dshsd
             InitializeComponent();
 
             InitColors();
