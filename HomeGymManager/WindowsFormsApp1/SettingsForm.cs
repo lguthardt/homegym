@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,33 @@ namespace HomeGymManager
             CenterControl(paTop, laTimerGeneral);
             CenterControl(paContainer, paScreenWannabe);
             CenterControl(paMain, label1, false);
+
+            InitGetAllProcesses();
+        }
+
+        private void InitGetAllProcesses()
+        {
+            List<IntPtr> mainHWnd = new List<IntPtr>();
+            List<string> notWantedWindows = new List<string>();
+            notWantedWindows.Add("Time");
+            notWantedWindows.Add("SystemSettings");
+            notWantedWindows.Add("WindowsInternal.ComposableShell.Experiences.TextInput.InputApp");
+            notWantedWindows.Add("ApplicationFrameHost");
+
+            Process[] processes = Process.GetProcesses();
+            if (processes.Length > 0)
+            {
+                foreach (Process p in processes)
+                {
+                    if (!String.IsNullOrEmpty(p.MainWindowTitle))
+                    {
+                        if (!notWantedWindows.Contains(p.ProcessName))
+                        {
+                            mainHWnd.Add(p.MainWindowHandle);
+                        }
+                    }
+                }
+            }
         }
 
         private void InitValues()
