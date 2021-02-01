@@ -13,9 +13,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace HomeGymManager
 {
+    public struct WINDOWPLACEMENT
+    {
+        public int length;
+        public uint flags;
+        public uint showCmd;
+        public System.Drawing.Point ptMinPosition;
+        public System.Drawing.Point ptMaxPosition;
+        public System.Drawing.Rectangle rcNormalPosition;
+    }
+
     public partial class HomeGymManagerForm : Form
     {
         [DllImport("user32.dll", SetLastError = true)]
@@ -29,6 +41,25 @@ namespace HomeGymManager
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        const uint SW_HIDE = 0;
+        const uint SW_MAXIMIZE = 3;
+        const uint SW_MINIMIZE = 6;
+        const uint SW_RESTORE = 9;
+        const uint SW_SHOW = 5;
+        const uint SW_SHOWMAXIMIZED = 3;
+        const uint SW_SHOWMINIMIZED = 2;
+        const uint SW_SHOWMINNOACTIVE = 7;
+        const uint SW_SHOWNA = 8;
+        const uint SW_SHOWNOACTIVATE = 4;
+        const uint SW_SHOWNORMAL = 1;
 
         VideoCapture capture;
         Mat frame;
@@ -64,25 +95,60 @@ namespace HomeGymManager
 
         private void InitWindowsSizes()
         {
-            var t = Properties.Settings.Default.rightWindowPercentage;
-
-            this.Width = (int)(Properties.Settings.Default.rightWindowPercentage * Screen.PrimaryScreen.Bounds.Width);
-            this.Height = Screen.PrimaryScreen.Bounds.Height;
-            this.Location = new System.Drawing.Point(Screen.PrimaryScreen.Bounds.Width - this.Width + 10, 0);
-
             if (Properties.Settings.Default.autoDock)
             {
-                InitChromeAndThisProgramSize();
+                SetThisProgramAndOtherProgramSizeLocation();
             }
         }
 
-        private void InitChromeAndThisProgramSize()
+        private Size GetThisWindowSize()
+        {
+            int w = (int)(Properties.Settings.Default.rightWindowPercentage * Screen.PrimaryScreen.Bounds.Width);
+            int h = Screen.PrimaryScreen.WorkingArea.Height + 8;
+
+            return new System.Drawing.Size(w, h);
+        }
+
+        private Size GetOtherWindowSize()
+        {
+            int w = Screen.PrimaryScreen.Bounds.Width - this.Width + 7 + 7 + 10;
+            int h = this.Height;
+
+            return new System.Drawing.Size(w, h);
+        }
+
+        private Point GetThisWindowLocation()
+        {
+            int x = Screen.PrimaryScreen.Bounds.Width - this.Width + 8;
+            int y = 0;
+
+            return new Point(x, y);
+        }
+
+        private Point GetOtherWindowLocation()
+        {
+            int x = - 8;
+            int y = 0;
+
+            return new Point(x, y);
+        }
+
+        private void SetThisProgramAndOtherProgramSizeLocation()
+        {
+            this.Width = GetThisWindowSize().Width;
+            this.Height = GetThisWindowSize().Height;
+            this.Location = GetThisWindowLocation();
+
+            SetOtherProgramSizeLocation();
+        }
+
+        private void SetOtherProgramSizeLocation()
         {
             IntPtr hWndChrome = IntPtr.Zero;
-            Process[] processesChrome = Process.GetProcessesByName("Chrome");
-            if (processesChrome.Length > 0)
+            Process[] processes = Process.GetProcessesByName(Properties.Settings.Default.dockWindowName);
+            if (processes.Length > 0)
             {
-                foreach (Process proc in processesChrome)
+                foreach (Process proc in processes)
                 {
                     if (proc.MainWindowHandle == IntPtr.Zero)
                         continue;
@@ -93,14 +159,20 @@ namespace HomeGymManager
                     }
                 }
             }
+
             if (hWndChrome != IntPtr.Zero)
             {
-                var moved = SetWindowPos(hWndChrome, IntPtr.Zero, -10, 0, Screen.PrimaryScreen.Bounds.Width - this.Width + 20 + 15, Screen.PrimaryScreen.Bounds.Height, 0);
-
-                if (moved)
+                WINDOWPLACEMENT windowPos = new WINDOWPLACEMENT();
+                if (GetWindowPlacement(hWndChrome, ref windowPos))
                 {
-                    SetForegroundWindow(hWndChrome);
-                    SetForegroundWindow(this.Handle);
+                    windowPos.showCmd = SW_SHOWNORMAL;
+                    windowPos.rcNormalPosition = new Rectangle(GetOtherWindowLocation(), GetOtherWindowSize());
+
+                    if (SetWindowPlacement(hWndChrome, ref windowPos))
+                    {
+                        SetForegroundWindow(hWndChrome);
+                        SetForegroundWindow(this.Handle);
+                    }
                 }
             }
         }

@@ -15,9 +15,17 @@ namespace HomeGymManager
     {
         public double RightPercentage { get; set; }
 
+        Dictionary<string, IntPtr> AllWindowsDic = new Dictionary<string, IntPtr>();
+        List<string> NotWantedWindows = new List<string>();
+
+        bool InitValuesState = false;
+        string SelectedWindowName = "";
+
         public SettingsForm()
         {
             InitializeComponent();
+
+            InitValuesState = true;
 
             InitColors();
             InitValues();
@@ -26,17 +34,24 @@ namespace HomeGymManager
             CenterControl(paContainer, paScreenWannabe);
             CenterControl(paMain, label1, false);
 
+            InitNotWantedWindows();
             InitGetAllProcesses();
+
+            InitValuesState = false;
+        }
+
+        private void InitNotWantedWindows()
+        {
+            NotWantedWindows.Add("Time");
+            NotWantedWindows.Add("SystemSettings");
+            NotWantedWindows.Add("WindowsInternal.ComposableShell.Experiences.TextInput.InputApp");
+            NotWantedWindows.Add("ApplicationFrameHost");
+            NotWantedWindows.Add("devenv");
         }
 
         private void InitGetAllProcesses()
         {
-            List<IntPtr> mainHWnd = new List<IntPtr>();
-            List<string> notWantedWindows = new List<string>();
-            notWantedWindows.Add("Time");
-            notWantedWindows.Add("SystemSettings");
-            notWantedWindows.Add("WindowsInternal.ComposableShell.Experiences.TextInput.InputApp");
-            notWantedWindows.Add("ApplicationFrameHost");
+            AllWindowsDic.Clear();
 
             Process[] processes = Process.GetProcesses();
             if (processes.Length > 0)
@@ -45,13 +60,25 @@ namespace HomeGymManager
                 {
                     if (!String.IsNullOrEmpty(p.MainWindowTitle))
                     {
-                        if (!notWantedWindows.Contains(p.ProcessName))
+                        if (!NotWantedWindows.Contains(p.ProcessName))
                         {
-                            mainHWnd.Add(p.MainWindowHandle);
+                            AllWindowsDic.Add(p.ProcessName.FirstCharToUpper(), p.MainWindowHandle);
                         }
                     }
                 }
             }
+
+            InitComboBox();
+        }
+
+        private void InitComboBox()
+        {
+            foreach (var p  in AllWindowsDic.Keys.ToList())
+            {
+                cobPrograms.Items.Add(p);
+            }
+
+            cobPrograms.SelectedIndex = cobPrograms.Items.IndexOf(Properties.Settings.Default.dockWindowName);
         }
 
         private void InitValues()
@@ -70,6 +97,7 @@ namespace HomeGymManager
             paMain.BackColor = ColorManager.Instance.DarkLighter;
             paBottom.BackColor = ColorManager.Instance.Dark;
             paScreenWannabe.BackColor = ColorManager.Instance.Medium;
+            cobPrograms.BackColor = ColorManager.Instance.DarkLighter;
         }
 
         private void CenterControl(Control parent, Control child, bool changeHeight = true)
@@ -90,6 +118,7 @@ namespace HomeGymManager
         {
             Properties.Settings.Default.autoDock = cbDocking.Checked;
             Properties.Settings.Default.rightWindowPercentage = RightPercentage;
+            Properties.Settings.Default.dockWindowName = SelectedWindowName;
 
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();
@@ -142,6 +171,11 @@ namespace HomeGymManager
             UpdateDockSizeLabels();
 
             CenterControl(paRight, laRight, false);
+        }
+
+        private void cobPrograms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedWindowName = cobPrograms.SelectedItem.ToString();
         }
     }
 }

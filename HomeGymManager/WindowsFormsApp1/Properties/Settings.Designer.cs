@@ -82,5 +82,17 @@ namespace HomeGymManager.Properties {
                 this["rightWindowPercentage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
+        public string dockWindowName {
+            get {
+                return ((string)(this["dockWindowName"]));
+            }
+            set {
+                this["dockWindowName"] = value;
+            }
+        }
     }
 }

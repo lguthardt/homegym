@@ -17,5 +17,8 @@
     <Setting Name="rightWindowPercentage" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.66</Value>
     </Setting>
+    <Setting Name="dockWindowName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Chrome</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
