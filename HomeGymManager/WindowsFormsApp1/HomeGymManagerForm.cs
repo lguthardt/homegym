@@ -83,14 +83,25 @@ namespace HomeGymManager
             InitializeComponent();
 
             InitCam();
-            SetColors();
             InitTimer();
+            InitControlValues();
 
-            CenterControl(paBottom, laTimerGeneral);
+            SetColors();
+
+            CenterControl(paBottomMain, laTimerGeneral);
             CenterControl(paLower, paTimerContainer);
             CenterControl(paPicture, pbLoading);
 
             InitWindowsSizes();
+        }
+
+        private void InitControlValues()
+        {
+            int padding = pbCornerTopLeft.Width;
+
+            pbCam.Location = new Point(padding, padding);
+            pbCam.Width = paPicture.Width - padding * 2;
+            pbCam.Height = paPicture.Height - padding * 2;
         }
 
         private void InitWindowsSizes()
@@ -104,22 +115,28 @@ namespace HomeGymManager
         private Size GetThisWindowSize()
         {
             int w = (int)(Properties.Settings.Default.rightWindowPercentage * Screen.PrimaryScreen.Bounds.Width);
-            int h = Screen.PrimaryScreen.WorkingArea.Height + 8;
+            int h = Screen.PrimaryScreen.WorkingArea.Height;
 
             return new System.Drawing.Size(w, h);
         }
 
         private Size GetOtherWindowSize()
         {
-            int w = Screen.PrimaryScreen.Bounds.Width - this.Width + 7 + 7 + 10;
+            int w = Screen.PrimaryScreen.Bounds.Width - this.Width;
             int h = this.Height;
+
+            if (Properties.Settings.Default.dockWindowName.ToLower() == "chrome")
+            {
+                w += 8;
+                h += 8;
+            }
 
             return new System.Drawing.Size(w, h);
         }
 
         private Point GetThisWindowLocation()
         {
-            int x = Screen.PrimaryScreen.Bounds.Width - this.Width + 8;
+            int x = Screen.PrimaryScreen.Bounds.Width - this.Width;
             int y = 0;
 
             return new Point(x, y);
@@ -127,8 +144,13 @@ namespace HomeGymManager
 
         private Point GetOtherWindowLocation()
         {
-            int x = - 8;
+            int x = 0;
             int y = 0;
+
+            if (Properties.Settings.Default.dockWindowName.ToLower() == "chrome")
+            {
+                x = -8;
+            }
 
             return new Point(x, y);
         }
@@ -196,7 +218,10 @@ namespace HomeGymManager
         private void SetColors()
         {
             this.BackColor = ColorManager.Instance.DarkLighter;
-            paBottom.BackColor = ColorManager.Instance.Dark;
+            paTopMain.BackColor = ColorManager.Instance.Dark;
+            paLeftMain.BackColor = ColorManager.Instance.Dark;
+            paBottomMain.BackColor = ColorManager.Instance.Dark;
+
             paPicture.BackColor = ColorManager.Instance.DarkLighter;
             paLower.BackColor = ColorManager.Instance.DarkLighter;
         }
@@ -267,7 +292,7 @@ namespace HomeGymManager
 
         private void paBottom_SizeChanged(object sender, EventArgs e)
         {
-            CenterControl(paBottom, laTimerGeneral);
+            CenterControl(paBottomMain, laTimerGeneral);
         }
 
         private void paLower_SizeChanged(object sender, EventArgs e)
@@ -331,6 +356,25 @@ namespace HomeGymManager
             if (e.KeyCode == Keys.Space)
             {
                 SwitchTimer();
+            }
+            else if (e.KeyData == (Keys.Control | Keys.D))
+            {
+                var dockForm = new SettingsForm();
+
+                if (dockForm.ShowDialog() == DialogResult.OK)
+                {
+                    InitWindowsSizes();
+                }
+            }
+            else if (e.KeyData == (Keys.Control | Keys.T))
+            {
+                var timerForm = new ChangeRestTimer();
+                timerForm.ShowDialog();
+            }
+            else if (e.KeyData == (Keys.Control | Keys.S))
+            {
+                var soundForm = new ChangeRestSound();
+                soundForm.ShowDialog();
             }
         }
 
@@ -427,6 +471,26 @@ namespace HomeGymManager
         {
             var changeRestSound = new ChangeRestSound();
             changeRestSound.ShowDialog();
+        }
+
+        private void btTimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btTimer_MouseEnter(object sender, EventArgs e)
+        {
+            btTimer.BackColor = ColorManager.Instance.DarkLighter;
+        }
+
+        private void btTimer_MouseLeave(object sender, EventArgs e)
+        {
+            btTimer.BackColor = ColorManager.Instance.Dark;
+        }
+
+        private void btClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
