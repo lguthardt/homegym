@@ -50,24 +50,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChangeRestSound.cs">
+    <Compile Include="ChangeRestSoundForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChangeRestSound.Designer.cs">
-      <DependentUpon>ChangeRestSound.cs</DependentUpon>
+    <Compile Include="ChangeRestSoundForm.Designer.cs">
+      <DependentUpon>ChangeRestSoundForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="DockingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
+    <Compile Include="DockingForm.Designer.cs">
+      <DependentUpon>DockingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChangeRestTimer.cs">
+    <Compile Include="ChangeRestTimerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChangeRestTimer.Designer.cs">
-      <DependentUpon>ChangeRestTimer.cs</DependentUpon>
+    <Compile Include="ChangeRestTimerForm.Designer.cs">
+      <DependentUpon>ChangeRestTimerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorManager.cs" />
     <Compile Include="HomeGymManagerForm.cs">
@@ -78,14 +78,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ChangeRestSound.resx">
-      <DependentUpon>ChangeRestSound.cs</DependentUpon>
+    <EmbeddedResource Include="ChangeRestSoundForm.resx">
+      <DependentUpon>ChangeRestSoundForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
+    <EmbeddedResource Include="DockingForm.resx">
+      <DependentUpon>DockingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChangeRestTimer.resx">
-      <DependentUpon>ChangeRestTimer.cs</DependentUpon>
+    <EmbeddedResource Include="ChangeRestTimerForm.resx">
+      <DependentUpon>ChangeRestTimerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeGymManagerForm.resx">
       <DependentUpon>HomeGymManagerForm.cs</DependentUpon>

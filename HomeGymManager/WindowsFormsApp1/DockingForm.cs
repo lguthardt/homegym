@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace HomeGymManager
 {
-    public partial class SettingsForm : Form
+    public partial class DockingForm : Form
     {
         public double RightPercentage { get; set; }
 
@@ -21,7 +21,7 @@ namespace HomeGymManager
         bool InitValuesState = false;
         string SelectedWindowName = "";
 
-        public SettingsForm()
+        public DockingForm()
         {
             InitializeComponent();
 
@@ -176,6 +176,14 @@ namespace HomeGymManager
         private void cobPrograms_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedWindowName = cobPrograms.SelectedItem.ToString();
+        }
+
+        private void DockingForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
         }
     }
 }

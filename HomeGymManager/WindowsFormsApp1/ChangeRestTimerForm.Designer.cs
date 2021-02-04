@@ -1,6 +1,6 @@
 ﻿namespace HomeGymManager
 {
-    partial class ChangeRestSound
+    partial class ChangeRestTimerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,11 +34,15 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btCancel = new System.Windows.Forms.Button();
             this.btOk = new System.Windows.Forms.Button();
-            this.cbSound = new System.Windows.Forms.CheckBox();
-            this.laDockDescription = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numSeconds = new System.Windows.Forms.NumericUpDown();
+            this.numMin = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMin)).BeginInit();
             this.SuspendLayout();
             // 
             // laTimerGeneral
@@ -49,9 +53,9 @@
             this.laTimerGeneral.ForeColor = System.Drawing.Color.LightGray;
             this.laTimerGeneral.Location = new System.Drawing.Point(137, 57);
             this.laTimerGeneral.Name = "laTimerGeneral";
-            this.laTimerGeneral.Size = new System.Drawing.Size(340, 36);
+            this.laTimerGeneral.Size = new System.Drawing.Size(327, 36);
             this.laTimerGeneral.TabIndex = 2;
-            this.laTimerGeneral.Text = "Change the rest sound";
+            this.laTimerGeneral.Text = "Change the rest timer";
             this.laTimerGeneral.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // panel1
@@ -69,9 +73,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Controls.Add(this.laDockDescription);
-            this.panel2.Controls.Add(this.cbSound);
             this.panel2.Controls.Add(this.panel3);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.numSeconds);
+            this.panel2.Controls.Add(this.numMin);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
@@ -123,33 +129,58 @@
             this.btOk.MouseEnter += new System.EventHandler(this.btOk_MouseEnter);
             this.btOk.MouseLeave += new System.EventHandler(this.btOk_MouseLeave);
             // 
-            // cbSound
+            // label2
             // 
-            this.cbSound.AutoSize = true;
-            this.cbSound.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSound.ForeColor = System.Drawing.Color.LightGray;
-            this.cbSound.Location = new System.Drawing.Point(54, 175);
-            this.cbSound.Name = "cbSound";
-            this.cbSound.Size = new System.Drawing.Size(406, 28);
-            this.cbSound.TabIndex = 9;
-            this.cbSound.Text = "Play sound after the rest time expired";
-            this.cbSound.UseVisualStyleBackColor = true;
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.LightGray;
+            this.label2.Location = new System.Drawing.Point(288, 201);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 30);
+            this.label2.TabIndex = 6;
+            this.label2.Text = ":";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
-            // laDockDescription
+            // numSeconds
             // 
-            this.laDockDescription.AutoSize = true;
-            this.laDockDescription.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laDockDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.laDockDescription.Location = new System.Drawing.Point(50, 206);
-            this.laDockDescription.MaximumSize = new System.Drawing.Size(450, 0);
-            this.laDockDescription.Name = "laDockDescription";
-            this.laDockDescription.Size = new System.Drawing.Size(445, 63);
-            this.laDockDescription.TabIndex = 11;
-            this.laDockDescription.Text = "More features are planned, so you can select the sound of a few default sounds or" +
-    " even pick your own sound from your PC";
-            this.laDockDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.numSeconds.BackColor = System.Drawing.Color.Gray;
+            this.numSeconds.Font = new System.Drawing.Font("Century Gothic", 18F);
+            this.numSeconds.ForeColor = System.Drawing.Color.LightGray;
+            this.numSeconds.Increment = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numSeconds.Location = new System.Drawing.Point(314, 199);
+            this.numSeconds.Name = "numSeconds";
+            this.numSeconds.Size = new System.Drawing.Size(62, 37);
+            this.numSeconds.TabIndex = 5;
             // 
-            // ChangeRestSound
+            // numMin
+            // 
+            this.numMin.BackColor = System.Drawing.Color.Gray;
+            this.numMin.Font = new System.Drawing.Font("Century Gothic", 18F);
+            this.numMin.ForeColor = System.Drawing.Color.LightGray;
+            this.numMin.Location = new System.Drawing.Point(220, 199);
+            this.numMin.Name = "numMin";
+            this.numMin.Size = new System.Drawing.Size(62, 37);
+            this.numMin.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.LightGray;
+            this.label1.Location = new System.Drawing.Point(51, 199);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 30);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Timer";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // ChangeRestTimer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -157,14 +188,18 @@
             this.ClientSize = new System.Drawing.Size(614, 384);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ChangeRestSound";
+            this.KeyPreview = true;
+            this.Name = "ChangeRestTimer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChangeRestTimer";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChangeRestTimer_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMin)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -175,9 +210,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numSeconds;
+        private System.Windows.Forms.NumericUpDown numMin;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Button btOk;
-        private System.Windows.Forms.CheckBox cbSound;
-        private System.Windows.Forms.Label laDockDescription;
     }
 }

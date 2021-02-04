@@ -84,8 +84,6 @@ namespace HomeGymManager
         public bool MessagePopupShown { get; private set; }
         public int CurrentPopupTime { get; private set; }
         public int PopupShowDuration { get; private set; }
-        public int PopupMinutesChange { get; private set; }
-        public int PopupSecondsChange { get; private set; }
 
         public HomeGymManagerForm()
         {
@@ -445,8 +443,8 @@ namespace HomeGymManager
             if (m == time.Item1 && s == time.Item2)
                 didNotChange = true;
 
-            Properties.Settings.Default.secondsRestTime = time.Item2;
             Properties.Settings.Default.minsRestTime = time.Item1;
+            Properties.Settings.Default.secondsRestTime = time.Item2;
 
             ShowMessagePopup(m, s, change, add, didNotChange);
         }
@@ -465,14 +463,19 @@ namespace HomeGymManager
 
         Tuple<int, int> GetTimeFromAddSeconds(int m, int s, int change, bool add, bool allowNegative = false)
         {
+            if (allowNegative)
+            {
+
+            }
+
             if (add)
             {
                 //add when below 0
                 if (m < 0 || s < 0)
                 {
-                    if (s < - 15)
+                    if (s < - change)
                     {
-                        s += 15;
+                        s += change;
                     }
                     else
                     {
@@ -533,57 +536,25 @@ namespace HomeGymManager
 
             if (!didNotChange)
             {
-                var time = GetTimeFromAddSeconds(PopupMinutesChange, PopupSecondsChange, change, add, true);
-
-                PopupMinutesChange = time.Item1;
-                PopupSecondsChange = time.Item2;
-
-                string sign = "";
-                if (PopupMinutesChange < 0 || PopupSecondsChange < 0)
-                {
-                    sign = "- ";
-                    laPopupRestTimerDiff.ForeColor = ColorManager.Instance.Error;
-
-                    string min;
-                    if (PopupMinutesChange < 0)
-                        min = (PopupMinutesChange * (-1)).ToString("00");
-                    else
-                        min = PopupMinutesChange.ToString("00");
-
-                    string sec;
-                    if (PopupSecondsChange < 0)
-                        sec = (PopupSecondsChange * (-1)).ToString("00");
-                    else
-                        sec = PopupSecondsChange.ToString("00");
-
-                    laPopupRestTimerDiff.Text = sign + min + ":" + sec ;
-                }
-                else
-                {
-                    sign = "+ ";
-                    laPopupRestTimerDiff.ForeColor = ColorManager.Instance.Green;
-                    laPopupRestTimerDiff.Text = sign + PopupMinutesChange.ToString("00") + ":" + PopupSecondsChange.ToString("00"); ;
-                }
-
                 laPopupRestTimer.Text = Properties.Settings.Default.minsRestTime.ToString("00") + ":" + Properties.Settings.Default.secondsRestTime.ToString("00");
             }
         }
 
         private void ShowRestSoundForm()
         {
-            var soundForm = new ChangeRestSound();
+            var soundForm = new ChangeRestSoundForm();
             soundForm.ShowDialog();
         }
 
         private void ShowTimeForm()
         {
-            var timerForm = new ChangeRestTimer();
+            var timerForm = new ChangeRestTimerForm();
             timerForm.ShowDialog();
         }
 
         private void ShowDockForm()
         {
-            var dockForm = new SettingsForm();
+            var dockForm = new DockingForm();
 
             if (dockForm.ShowDialog() == DialogResult.OK)
             {
@@ -668,13 +639,13 @@ namespace HomeGymManager
 
         private void changeRestTimerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var changeTimerForm = new ChangeRestTimer();
+            var changeTimerForm = new ChangeRestTimerForm();
             changeTimerForm.ShowDialog();
         }
 
         private void settingsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            var settingsForm = new SettingsForm();
+            var settingsForm = new DockingForm();
 
             if (settingsForm.ShowDialog() == DialogResult.OK)
             {
@@ -760,8 +731,6 @@ namespace HomeGymManager
                 paPopup.Visible = false;
                 MessagePopupShown = false;
                 CurrentPopupTime = 0;
-                PopupMinutesChange = 0;
-                PopupSecondsChange = 0;
 
                 Properties.Settings.Default.Save();
                 Properties.Settings.Default.Reload();

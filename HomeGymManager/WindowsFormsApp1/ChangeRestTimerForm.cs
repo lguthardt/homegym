@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace HomeGymManager
 {
-    public partial class ChangeRestTimer : Form
+    public partial class ChangeRestTimerForm : Form
     {
-        public ChangeRestTimer()
+        public ChangeRestTimerForm()
         {
             InitializeComponent();
 
@@ -78,6 +78,14 @@ namespace HomeGymManager
         private void btCancel_MouseLeave(object sender, EventArgs e)
         {
             btCancel.BackColor = ColorManager.Instance.Dark;
+        }
+
+        private void ChangeRestTimer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
         }
     }
 }

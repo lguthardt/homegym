@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace HomeGymManager
 {
-    public partial class ChangeRestSound : Form
+    public partial class ChangeRestSoundForm : Form
     {
-        public ChangeRestSound()
+        public ChangeRestSoundForm()
         {
             InitializeComponent();
 
@@ -74,6 +74,14 @@ namespace HomeGymManager
         private void btCancel_MouseLeave(object sender, EventArgs e)
         {
             btCancel.BackColor = ColorManager.Instance.Dark;
+        }
+
+        private void ChangeRestSound_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
         }
     }
 }

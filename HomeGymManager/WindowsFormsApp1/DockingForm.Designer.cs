@@ -1,6 +1,6 @@
 ﻿namespace HomeGymManager
 {
-    partial class SettingsForm
+    partial class DockingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockingForm));
             this.laTimerGeneral = new System.Windows.Forms.Label();
             this.paTop = new System.Windows.Forms.Panel();
             this.paMain = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cobPrograms = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.paContainer = new System.Windows.Forms.Panel();
             this.paScreenWannabe = new System.Windows.Forms.Panel();
@@ -46,8 +48,6 @@
             this.paBottom = new System.Windows.Forms.Panel();
             this.btCancel = new System.Windows.Forms.Button();
             this.btOk = new System.Windows.Forms.Button();
-            this.cobPrograms = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.paTop.SuspendLayout();
             this.paMain.SuspendLayout();
             this.paContainer.SuspendLayout();
@@ -98,6 +98,30 @@
             this.paMain.Name = "paMain";
             this.paMain.Size = new System.Drawing.Size(762, 702);
             this.paMain.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 15.75F);
+            this.label2.ForeColor = System.Drawing.Color.LightGray;
+            this.label2.Location = new System.Drawing.Point(31, 126);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(374, 24);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Select the current program to dock";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // cobPrograms
+            // 
+            this.cobPrograms.BackColor = System.Drawing.Color.Gray;
+            this.cobPrograms.Font = new System.Drawing.Font("Century Gothic", 15.75F);
+            this.cobPrograms.ForeColor = System.Drawing.Color.LightGray;
+            this.cobPrograms.FormattingEnabled = true;
+            this.cobPrograms.Location = new System.Drawing.Point(423, 123);
+            this.cobPrograms.Name = "cobPrograms";
+            this.cobPrograms.Size = new System.Drawing.Size(251, 32);
+            this.cobPrograms.TabIndex = 12;
+            this.cobPrograms.SelectedIndexChanged += new System.EventHandler(this.cobPrograms_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -273,30 +297,6 @@
             this.btOk.MouseEnter += new System.EventHandler(this.btOk_MouseEnter);
             this.btOk.MouseLeave += new System.EventHandler(this.btOk_MouseLeave);
             // 
-            // cobPrograms
-            // 
-            this.cobPrograms.BackColor = System.Drawing.Color.Gray;
-            this.cobPrograms.Font = new System.Drawing.Font("Century Gothic", 15.75F);
-            this.cobPrograms.ForeColor = System.Drawing.Color.LightGray;
-            this.cobPrograms.FormattingEnabled = true;
-            this.cobPrograms.Location = new System.Drawing.Point(423, 123);
-            this.cobPrograms.Name = "cobPrograms";
-            this.cobPrograms.Size = new System.Drawing.Size(251, 32);
-            this.cobPrograms.TabIndex = 12;
-            this.cobPrograms.SelectedIndexChanged += new System.EventHandler(this.cobPrograms_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 15.75F);
-            this.label2.ForeColor = System.Drawing.Color.LightGray;
-            this.label2.Location = new System.Drawing.Point(31, 126);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(374, 24);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Select the current program to dock";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,9 +305,11 @@
             this.ClientSize = new System.Drawing.Size(768, 708);
             this.Controls.Add(this.paMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChangeRestTimer";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DockingForm_KeyDown);
             this.paTop.ResumeLayout(false);
             this.paTop.PerformLayout();
             this.paMain.ResumeLayout(false);
