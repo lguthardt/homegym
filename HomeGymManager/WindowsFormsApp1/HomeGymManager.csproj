@@ -122,12 +122,6 @@
     <None Include="Resources\Group 2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Timer_Stop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Timer.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\3.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +135,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mixed.ico" />
+    <None Include="Resources\Popup.png" />
+    <None Include="Resources\Docking.png" />
+    <None Include="Resources\Sound.png" />
+    <None Include="Resources\TimerSettings.png" />
+    <None Include="Resources\Record.png" />
+    <None Include="Resources\Clips.png" />
+    <None Include="Resources\StopRecording.png" />
+    <None Include="Resources\RecSign.png" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\Timer_Stop_smaller.png" />
+    <None Include="Resources\Timer_smaller.png" />
+    <None Include="Resources\Close.png" />
+    <None Include="Resources\Timer_Stop.png" />
+    <None Include="Resources\Timer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -35,6 +35,7 @@ namespace HomeGymManager
 
 		#endregion
 
+		//main theme colors
 		public Color DarkLighter { get; private set; } = ColorTranslator.FromHtml("#292B2F");
 		public Color Dark { get; private set; } = ColorTranslator.FromHtml("#202225");
 
@@ -44,5 +45,8 @@ namespace HomeGymManager
 		public Color Light { get; private set; } = ColorTranslator.FromHtml("#36393F");
 		public Color LightOverlay { get; private set; } = ColorTranslator.FromHtml("#40444B");
 
+		//extra colors
+		public Color Error { get; private set; } = ColorTranslator.FromHtml("#BF4040");
+		public Color Green { get; private set; } = ColorTranslator.FromHtml("#488E4F");
 	}
 }

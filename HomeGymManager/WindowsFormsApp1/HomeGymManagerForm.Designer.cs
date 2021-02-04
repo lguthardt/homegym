@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeGymManagerForm));
             this.paPicture = new System.Windows.Forms.Panel();
-            this.pbCornerTopLeft = new System.Windows.Forms.PictureBox();
-            this.pbLoading = new System.Windows.Forms.PictureBox();
-            this.pbCam = new System.Windows.Forms.PictureBox();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,10 +38,8 @@
             this.paLower = new System.Windows.Forms.Panel();
             this.paTimerContainer = new System.Windows.Forms.Panel();
             this.laTimer = new System.Windows.Forms.Label();
-            this.pbTimeSymbol = new System.Windows.Forms.PictureBox();
             this.paBottomMain = new System.Windows.Forms.Panel();
             this.laTimerGeneral = new System.Windows.Forms.Label();
-            this.pbThumosLogo = new System.Windows.Forms.PictureBox();
             this.laMotivationText = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.timerGeneral = new System.Windows.Forms.Timer(this.components);
@@ -53,23 +48,49 @@
             this.startResetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paTopMain = new System.Windows.Forms.Panel();
-            this.btClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.paLeftMain = new System.Windows.Forms.Panel();
-            this.btTimer = new System.Windows.Forms.Button();
+            this.paLeftMainTopCornerPadding = new System.Windows.Forms.Panel();
+            this.pbCornerTopLeft = new System.Windows.Forms.PictureBox();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.pbCam = new System.Windows.Forms.PictureBox();
+            this.paPopup = new System.Windows.Forms.Panel();
+            this.laPopupRestTimerDiff = new System.Windows.Forms.Label();
+            this.laPopupRestTimer = new System.Windows.Forms.Label();
+            this.laPopupText = new System.Windows.Forms.Label();
             this.pbCornerBottomLeft = new System.Windows.Forms.PictureBox();
+            this.pbTimeSymbol = new System.Windows.Forms.PictureBox();
+            this.pbThumosLogo = new System.Windows.Forms.PictureBox();
+            this.pbSettings = new System.Windows.Forms.PictureBox();
+            this.pbRestSound = new System.Windows.Forms.PictureBox();
+            this.pbDocking = new System.Windows.Forms.PictureBox();
+            this.pbRestTimer = new System.Windows.Forms.PictureBox();
+            this.pbClips = new System.Windows.Forms.PictureBox();
+            this.pbRecord = new System.Windows.Forms.PictureBox();
+            this.pbTimer = new System.Windows.Forms.PictureBox();
+            this.pbClose = new System.Windows.Forms.PictureBox();
+            this.timerPopUp = new System.Windows.Forms.Timer(this.components);
             this.paPicture.SuspendLayout();
+            this.paLower.SuspendLayout();
+            this.paTimerContainer.SuspendLayout();
+            this.paBottomMain.SuspendLayout();
+            this.paTopMain.SuspendLayout();
+            this.paLeftMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCornerTopLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCam)).BeginInit();
-            this.paLower.SuspendLayout();
-            this.paTimerContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTimeSymbol)).BeginInit();
-            this.paBottomMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbThumosLogo)).BeginInit();
-            this.paTopMain.SuspendLayout();
-            this.paLeftMain.SuspendLayout();
+            this.paPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCornerBottomLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimeSymbol)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbThumosLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRestSound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDocking)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRestTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClips)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClose)).BeginInit();
             this.SuspendLayout();
             // 
             // paPicture
@@ -83,40 +104,6 @@
             this.paPicture.Name = "paPicture";
             this.paPicture.Size = new System.Drawing.Size(732, 619);
             this.paPicture.TabIndex = 2;
-            // 
-            // pbCornerTopLeft
-            // 
-            this.pbCornerTopLeft.Image = ((System.Drawing.Image)(resources.GetObject("pbCornerTopLeft.Image")));
-            this.pbCornerTopLeft.Location = new System.Drawing.Point(0, 0);
-            this.pbCornerTopLeft.Name = "pbCornerTopLeft";
-            this.pbCornerTopLeft.Size = new System.Drawing.Size(16, 16);
-            this.pbCornerTopLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbCornerTopLeft.TabIndex = 4;
-            this.pbCornerTopLeft.TabStop = false;
-            // 
-            // pbLoading
-            // 
-            this.pbLoading.Image = global::HomeGymManager.Properties.Resources.LoadingGif;
-            this.pbLoading.Location = new System.Drawing.Point(200, 164);
-            this.pbLoading.Name = "pbLoading";
-            this.pbLoading.Size = new System.Drawing.Size(343, 233);
-            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLoading.TabIndex = 3;
-            this.pbLoading.TabStop = false;
-            // 
-            // pbCam
-            // 
-            this.pbCam.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbCam.BackColor = System.Drawing.Color.Transparent;
-            this.pbCam.Location = new System.Drawing.Point(13, 26);
-            this.pbCam.Name = "pbCam";
-            this.pbCam.Size = new System.Drawing.Size(695, 578);
-            this.pbCam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbCam.TabIndex = 0;
-            this.pbCam.TabStop = false;
-            this.pbCam.SizeChanged += new System.EventHandler(this.pbCam_SizeChanged);
             // 
             // actionsToolStripMenuItem
             // 
@@ -141,6 +128,7 @@
             // paLower
             // 
             this.paLower.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.paLower.Controls.Add(this.paPopup);
             this.paLower.Controls.Add(this.pbCornerBottomLeft);
             this.paLower.Controls.Add(this.paTimerContainer);
             this.paLower.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -172,17 +160,6 @@
             this.laTimer.Text = "00:01";
             this.laTimer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
-            // pbTimeSymbol
-            // 
-            this.pbTimeSymbol.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pbTimeSymbol.Image = global::HomeGymManager.Properties.Resources.Timer_Stop;
-            this.pbTimeSymbol.Location = new System.Drawing.Point(11, 31);
-            this.pbTimeSymbol.Name = "pbTimeSymbol";
-            this.pbTimeSymbol.Size = new System.Drawing.Size(25, 25);
-            this.pbTimeSymbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbTimeSymbol.TabIndex = 2;
-            this.pbTimeSymbol.TabStop = false;
-            // 
             // paBottomMain
             // 
             this.paBottomMain.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -208,16 +185,6 @@
             this.laTimerGeneral.TabIndex = 1;
             this.laTimerGeneral.Text = "00:00:01";
             this.laTimerGeneral.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // pbThumosLogo
-            // 
-            this.pbThumosLogo.Image = global::HomeGymManager.Properties.Resources.HighThumosLogo;
-            this.pbThumosLogo.Location = new System.Drawing.Point(20, 14);
-            this.pbThumosLogo.Name = "pbThumosLogo";
-            this.pbThumosLogo.Size = new System.Drawing.Size(51, 36);
-            this.pbThumosLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbThumosLogo.TabIndex = 1;
-            this.pbThumosLogo.TabStop = false;
             // 
             // laMotivationText
             // 
@@ -270,30 +237,13 @@
             // paTopMain
             // 
             this.paTopMain.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.paTopMain.Controls.Add(this.btClose);
+            this.paTopMain.Controls.Add(this.pbClose);
             this.paTopMain.Controls.Add(this.label1);
             this.paTopMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.paTopMain.Location = new System.Drawing.Point(0, 0);
             this.paTopMain.Name = "paTopMain";
             this.paTopMain.Size = new System.Drawing.Size(802, 23);
             this.paTopMain.TabIndex = 4;
-            // 
-            // btClose
-            // 
-            this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClose.BackColor = System.Drawing.Color.Transparent;
-            this.btClose.FlatAppearance.BorderSize = 0;
-            this.btClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btClose.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btClose.ForeColor = System.Drawing.Color.LightGray;
-            this.btClose.Location = new System.Drawing.Point(776, 0);
-            this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(23, 23);
-            this.btClose.TabIndex = 11;
-            this.btClose.TabStop = false;
-            this.btClose.Text = "X";
-            this.btClose.UseVisualStyleBackColor = false;
-            this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
             // label1
             // 
@@ -310,30 +260,113 @@
             // paLeftMain
             // 
             this.paLeftMain.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.paLeftMain.Controls.Add(this.btTimer);
+            this.paLeftMain.Controls.Add(this.pbSettings);
+            this.paLeftMain.Controls.Add(this.pbRestSound);
+            this.paLeftMain.Controls.Add(this.pbDocking);
+            this.paLeftMain.Controls.Add(this.pbRestTimer);
+            this.paLeftMain.Controls.Add(this.pbClips);
+            this.paLeftMain.Controls.Add(this.pbRecord);
+            this.paLeftMain.Controls.Add(this.pbTimer);
+            this.paLeftMain.Controls.Add(this.paLeftMainTopCornerPadding);
             this.paLeftMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.paLeftMain.Location = new System.Drawing.Point(0, 23);
             this.paLeftMain.Name = "paLeftMain";
             this.paLeftMain.Size = new System.Drawing.Size(70, 777);
             this.paLeftMain.TabIndex = 5;
             // 
-            // btTimer
+            // paLeftMainTopCornerPadding
             // 
-            this.btTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btTimer.BackColor = System.Drawing.Color.Transparent;
-            this.btTimer.FlatAppearance.BorderSize = 0;
-            this.btTimer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btTimer.Font = new System.Drawing.Font("Century Gothic", 18F);
-            this.btTimer.ForeColor = System.Drawing.Color.LightGray;
-            this.btTimer.Location = new System.Drawing.Point(17, 15);
-            this.btTimer.Name = "btTimer";
-            this.btTimer.Size = new System.Drawing.Size(40, 40);
-            this.btTimer.TabIndex = 10;
-            this.btTimer.Text = "Ok";
-            this.btTimer.UseVisualStyleBackColor = false;
-            this.btTimer.Click += new System.EventHandler(this.btTimer_Click);
-            this.btTimer.MouseEnter += new System.EventHandler(this.btTimer_MouseEnter);
-            this.btTimer.MouseLeave += new System.EventHandler(this.btTimer_MouseLeave);
+            this.paLeftMainTopCornerPadding.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.paLeftMainTopCornerPadding.Dock = System.Windows.Forms.DockStyle.Top;
+            this.paLeftMainTopCornerPadding.Location = new System.Drawing.Point(0, 0);
+            this.paLeftMainTopCornerPadding.Name = "paLeftMainTopCornerPadding";
+            this.paLeftMainTopCornerPadding.Size = new System.Drawing.Size(70, 16);
+            this.paLeftMainTopCornerPadding.TabIndex = 18;
+            // 
+            // pbCornerTopLeft
+            // 
+            this.pbCornerTopLeft.Image = ((System.Drawing.Image)(resources.GetObject("pbCornerTopLeft.Image")));
+            this.pbCornerTopLeft.Location = new System.Drawing.Point(0, 0);
+            this.pbCornerTopLeft.Name = "pbCornerTopLeft";
+            this.pbCornerTopLeft.Size = new System.Drawing.Size(16, 16);
+            this.pbCornerTopLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCornerTopLeft.TabIndex = 4;
+            this.pbCornerTopLeft.TabStop = false;
+            // 
+            // pbLoading
+            // 
+            this.pbLoading.Image = global::HomeGymManager.Properties.Resources.LoadingGif;
+            this.pbLoading.Location = new System.Drawing.Point(200, 164);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(343, 233);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 3;
+            this.pbLoading.TabStop = false;
+            // 
+            // pbCam
+            // 
+            this.pbCam.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbCam.BackColor = System.Drawing.Color.Transparent;
+            this.pbCam.Location = new System.Drawing.Point(13, 26);
+            this.pbCam.Name = "pbCam";
+            this.pbCam.Size = new System.Drawing.Size(695, 578);
+            this.pbCam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCam.TabIndex = 0;
+            this.pbCam.TabStop = false;
+            this.pbCam.SizeChanged += new System.EventHandler(this.pbCam_SizeChanged);
+            // 
+            // paPopup
+            // 
+            this.paPopup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.paPopup.BackColor = System.Drawing.Color.Transparent;
+            this.paPopup.BackgroundImage = global::HomeGymManager.Properties.Resources.Popup;
+            this.paPopup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.paPopup.Controls.Add(this.laPopupRestTimerDiff);
+            this.paPopup.Controls.Add(this.laPopupRestTimer);
+            this.paPopup.Controls.Add(this.laPopupText);
+            this.paPopup.Location = new System.Drawing.Point(496, 16);
+            this.paPopup.Name = "paPopup";
+            this.paPopup.Size = new System.Drawing.Size(233, 76);
+            this.paPopup.TabIndex = 5;
+            this.paPopup.Visible = false;
+            // 
+            // laPopupRestTimerDiff
+            // 
+            this.laPopupRestTimerDiff.AutoSize = true;
+            this.laPopupRestTimerDiff.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laPopupRestTimerDiff.ForeColor = System.Drawing.Color.Silver;
+            this.laPopupRestTimerDiff.Location = new System.Drawing.Point(156, 14);
+            this.laPopupRestTimerDiff.Name = "laPopupRestTimerDiff";
+            this.laPopupRestTimerDiff.Size = new System.Drawing.Size(57, 18);
+            this.laPopupRestTimerDiff.TabIndex = 4;
+            this.laPopupRestTimerDiff.Text = "+ 01:00";
+            this.laPopupRestTimerDiff.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // laPopupRestTimer
+            // 
+            this.laPopupRestTimer.AutoSize = true;
+            this.laPopupRestTimer.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laPopupRestTimer.ForeColor = System.Drawing.Color.Silver;
+            this.laPopupRestTimer.Location = new System.Drawing.Point(106, 28);
+            this.laPopupRestTimer.Name = "laPopupRestTimer";
+            this.laPopupRestTimer.Size = new System.Drawing.Size(44, 18);
+            this.laPopupRestTimer.TabIndex = 3;
+            this.laPopupRestTimer.Text = "01:00";
+            this.laPopupRestTimer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // laPopupText
+            // 
+            this.laPopupText.AutoSize = true;
+            this.laPopupText.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laPopupText.ForeColor = System.Drawing.Color.Silver;
+            this.laPopupText.Location = new System.Drawing.Point(20, 28);
+            this.laPopupText.Name = "laPopupText";
+            this.laPopupText.Size = new System.Drawing.Size(80, 18);
+            this.laPopupText.TabIndex = 2;
+            this.laPopupText.Text = "Rest Timer";
+            this.laPopupText.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // pbCornerBottomLeft
             // 
@@ -345,6 +378,141 @@
             this.pbCornerBottomLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCornerBottomLeft.TabIndex = 5;
             this.pbCornerBottomLeft.TabStop = false;
+            // 
+            // pbTimeSymbol
+            // 
+            this.pbTimeSymbol.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pbTimeSymbol.Image = global::HomeGymManager.Properties.Resources.Timer_Stop;
+            this.pbTimeSymbol.Location = new System.Drawing.Point(11, 31);
+            this.pbTimeSymbol.Name = "pbTimeSymbol";
+            this.pbTimeSymbol.Size = new System.Drawing.Size(25, 25);
+            this.pbTimeSymbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbTimeSymbol.TabIndex = 2;
+            this.pbTimeSymbol.TabStop = false;
+            // 
+            // pbThumosLogo
+            // 
+            this.pbThumosLogo.Image = global::HomeGymManager.Properties.Resources.HighThumosLogo;
+            this.pbThumosLogo.Location = new System.Drawing.Point(20, 18);
+            this.pbThumosLogo.Name = "pbThumosLogo";
+            this.pbThumosLogo.Size = new System.Drawing.Size(51, 30);
+            this.pbThumosLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbThumosLogo.TabIndex = 1;
+            this.pbThumosLogo.TabStop = false;
+            // 
+            // pbSettings
+            // 
+            this.pbSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbSettings.Image = global::HomeGymManager.Properties.Resources.Settings;
+            this.pbSettings.Location = new System.Drawing.Point(0, 717);
+            this.pbSettings.Name = "pbSettings";
+            this.pbSettings.Size = new System.Drawing.Size(70, 60);
+            this.pbSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbSettings.TabIndex = 17;
+            this.pbSettings.TabStop = false;
+            this.pbSettings.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbSettings.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbRestSound
+            // 
+            this.pbRestSound.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbRestSound.Image = global::HomeGymManager.Properties.Resources.Sound;
+            this.pbRestSound.Location = new System.Drawing.Point(0, 366);
+            this.pbRestSound.Name = "pbRestSound";
+            this.pbRestSound.Size = new System.Drawing.Size(70, 70);
+            this.pbRestSound.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbRestSound.TabIndex = 16;
+            this.pbRestSound.TabStop = false;
+            this.pbRestSound.Click += new System.EventHandler(this.pbRestSound_Click);
+            this.pbRestSound.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbRestSound.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbDocking
+            // 
+            this.pbDocking.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbDocking.Image = global::HomeGymManager.Properties.Resources.Docking;
+            this.pbDocking.Location = new System.Drawing.Point(0, 296);
+            this.pbDocking.Name = "pbDocking";
+            this.pbDocking.Size = new System.Drawing.Size(70, 70);
+            this.pbDocking.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbDocking.TabIndex = 15;
+            this.pbDocking.TabStop = false;
+            this.pbDocking.Click += new System.EventHandler(this.pbDocking_Click);
+            this.pbDocking.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbDocking.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbRestTimer
+            // 
+            this.pbRestTimer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbRestTimer.Image = global::HomeGymManager.Properties.Resources.TimerSettings;
+            this.pbRestTimer.Location = new System.Drawing.Point(0, 226);
+            this.pbRestTimer.Name = "pbRestTimer";
+            this.pbRestTimer.Size = new System.Drawing.Size(70, 70);
+            this.pbRestTimer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbRestTimer.TabIndex = 14;
+            this.pbRestTimer.TabStop = false;
+            this.pbRestTimer.Click += new System.EventHandler(this.pbRestTimer_Click);
+            this.pbRestTimer.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbRestTimer.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbClips
+            // 
+            this.pbClips.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbClips.Image = global::HomeGymManager.Properties.Resources.Clips;
+            this.pbClips.Location = new System.Drawing.Point(0, 156);
+            this.pbClips.Name = "pbClips";
+            this.pbClips.Size = new System.Drawing.Size(70, 70);
+            this.pbClips.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbClips.TabIndex = 13;
+            this.pbClips.TabStop = false;
+            this.pbClips.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbClips.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbRecord
+            // 
+            this.pbRecord.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbRecord.Image = global::HomeGymManager.Properties.Resources.Record;
+            this.pbRecord.Location = new System.Drawing.Point(0, 86);
+            this.pbRecord.Name = "pbRecord";
+            this.pbRecord.Size = new System.Drawing.Size(70, 70);
+            this.pbRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbRecord.TabIndex = 12;
+            this.pbRecord.TabStop = false;
+            this.pbRecord.Click += new System.EventHandler(this.pbRecord_Click);
+            this.pbRecord.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbRecord.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbTimer
+            // 
+            this.pbTimer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pbTimer.Image = global::HomeGymManager.Properties.Resources.Timer_Stop_smaller;
+            this.pbTimer.Location = new System.Drawing.Point(0, 16);
+            this.pbTimer.Name = "pbTimer";
+            this.pbTimer.Size = new System.Drawing.Size(70, 70);
+            this.pbTimer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbTimer.TabIndex = 11;
+            this.pbTimer.TabStop = false;
+            this.pbTimer.Click += new System.EventHandler(this.pbTimer_Click);
+            this.pbTimer.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
+            this.pbTimer.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
+            // 
+            // pbClose
+            // 
+            this.pbClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pbClose.Image = global::HomeGymManager.Properties.Resources.Close;
+            this.pbClose.Location = new System.Drawing.Point(779, 0);
+            this.pbClose.Name = "pbClose";
+            this.pbClose.Size = new System.Drawing.Size(23, 23);
+            this.pbClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbClose.TabIndex = 12;
+            this.pbClose.TabStop = false;
+            this.pbClose.Click += new System.EventHandler(this.pbClose_Click);
+            this.pbClose.MouseEnter += new System.EventHandler(this.pbClose_MouseEnter);
+            this.pbClose.MouseLeave += new System.EventHandler(this.pbClose_MouseLeave);
+            // 
+            // timerPopUp
+            // 
+            this.timerPopUp.Tick += new System.EventHandler(this.timerPopUp_Tick);
             // 
             // HomeGymManagerForm
             // 
@@ -366,20 +534,30 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.paPicture.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbCornerTopLeft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCam)).EndInit();
             this.paLower.ResumeLayout(false);
             this.paTimerContainer.ResumeLayout(false);
             this.paTimerContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTimeSymbol)).EndInit();
             this.paBottomMain.ResumeLayout(false);
             this.paBottomMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbThumosLogo)).EndInit();
             this.paTopMain.ResumeLayout(false);
             this.paTopMain.PerformLayout();
             this.paLeftMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbCornerTopLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCam)).EndInit();
+            this.paPopup.ResumeLayout(false);
+            this.paPopup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCornerBottomLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimeSymbol)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbThumosLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRestSound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDocking)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRestTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClips)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClose)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -410,10 +588,22 @@
         private System.Windows.Forms.Panel paTopMain;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel paLeftMain;
-        private System.Windows.Forms.Button btTimer;
         private System.Windows.Forms.PictureBox pbCornerTopLeft;
-        private System.Windows.Forms.Button btClose;
         private System.Windows.Forms.PictureBox pbCornerBottomLeft;
+        private System.Windows.Forms.PictureBox pbTimer;
+        private System.Windows.Forms.PictureBox pbSettings;
+        private System.Windows.Forms.PictureBox pbRestSound;
+        private System.Windows.Forms.PictureBox pbDocking;
+        private System.Windows.Forms.PictureBox pbRestTimer;
+        private System.Windows.Forms.PictureBox pbClips;
+        private System.Windows.Forms.PictureBox pbRecord;
+        private System.Windows.Forms.PictureBox pbClose;
+        private System.Windows.Forms.Panel paLeftMainTopCornerPadding;
+        private System.Windows.Forms.Panel paPopup;
+        private System.Windows.Forms.Label laPopupRestTimerDiff;
+        private System.Windows.Forms.Label laPopupRestTimer;
+        private System.Windows.Forms.Label laPopupText;
+        private System.Windows.Forms.Timer timerPopUp;
     }
 }
 

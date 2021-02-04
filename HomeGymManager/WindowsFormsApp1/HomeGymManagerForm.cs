@@ -77,6 +77,15 @@ namespace HomeGymManager
 
         bool timerIsRunning;
         bool loadingScreenHidden;
+        private int cameraImageHeight;
+        private int cameraImageWidth;
+
+        public bool Recording { get; private set; }
+        public bool MessagePopupShown { get; private set; }
+        public int CurrentPopupTime { get; private set; }
+        public int PopupShowDuration { get; private set; }
+        public int PopupMinutesChange { get; private set; }
+        public int PopupSecondsChange { get; private set; }
 
         public HomeGymManagerForm()
         {
@@ -93,11 +102,36 @@ namespace HomeGymManager
             CenterControl(paPicture, pbLoading);
 
             InitWindowsSizes();
+
+            InitTooltip();
+        }
+
+        private void InitTooltip()
+        {   
+            //maybe use tooltips one day
+
+            //var tooltip = new ToolTip();
+            //tooltip.AutomaticDelay = 1000;
+            //tooltip.OwnerDraw = true;
+            //tooltip.Draw += Tooltip_Draw;
+
+            //tooltip.BackColor = ColorManager.Instance.Medium;
+            //tooltip.ForeColor = Color.LightGray;
+            //tooltip.SetToolTip(pbTimer, "Start/Stop the time" + "     SPACE");
+        }
+
+        private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            e.DrawBackground();
+            //e.DrawBorder();
+            e.DrawText();
         }
 
         private void InitControlValues()
         {
             int padding = pbCornerTopLeft.Width;
+
+            paLeftMainTopCornerPadding.Height = padding;
 
             pbCam.Location = new Point(padding, padding);
             pbCam.Width = paPicture.Width - padding * 2;
@@ -217,13 +251,25 @@ namespace HomeGymManager
 
         private void SetColors()
         {
+            //normal colors
             this.BackColor = ColorManager.Instance.DarkLighter;
             paTopMain.BackColor = ColorManager.Instance.Dark;
             paLeftMain.BackColor = ColorManager.Instance.Dark;
+            paLeftMainTopCornerPadding.BackColor = ColorManager.Instance.Dark;
             paBottomMain.BackColor = ColorManager.Instance.Dark;
 
             paPicture.BackColor = ColorManager.Instance.DarkLighter;
             paLower.BackColor = ColorManager.Instance.DarkLighter;
+
+            //other colors
+            //this.BackColor = ColorManager.Instance.DarkLighter;
+            //paTopMain.BackColor = ColorManager.Instance.Dark;
+            //paLeftMain.BackColor = ColorManager.Instance.Dark;
+            //paLeftMainTopCornerPadding.BackColor = ColorManager.Instance.Dark;
+            //paBottomMain.BackColor = ColorManager.Instance.DarkLighter;
+
+            //paPicture.BackColor = ColorManager.Instance.Medium;
+            //paLower.BackColor = ColorManager.Instance.Medium;
         }
 
         private void CaptureCamera()
@@ -245,14 +291,21 @@ namespace HomeGymManager
                     if (!loadingScreenHidden)
                         cameraStarted = true;
 
-                    if (cameraStarted && !loadingScreenHidden)
+                    try
                     {
-                        this.pbLoading?.Invoke((MethodInvoker)delegate {
-                            // Running on the UI thread
-                            pbLoading.Visible = false;
-                        });
+                        if (cameraStarted && !loadingScreenHidden)
+                        {
+                            this.pbLoading?.Invoke((MethodInvoker)delegate {
+                                // Running on the UI thread
+                                pbLoading.Visible = false;
+                            });
 
-                        loadingScreenHidden = true;
+                            loadingScreenHidden = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
                     }
 
                     capture.Read(frame);
@@ -265,6 +318,8 @@ namespace HomeGymManager
 
                     try
                     {
+                        cameraImageHeight = image.Height;
+                        cameraImageWidth = image.Width;
                         pbCam.Image = image;
                     }
                     catch (System.InvalidOperationException)
@@ -357,24 +412,182 @@ namespace HomeGymManager
             {
                 SwitchTimer();
             }
+            else if (e.KeyData == (Keys.Control | Keys.Oemplus))
+            {
+                AdjustResttimerShortcutEvent(15, true);
+            }
+            else if (e.KeyData == (Keys.Control | Keys.OemMinus))
+            {
+                AdjustResttimerShortcutEvent(15, false);
+            }
             else if (e.KeyData == (Keys.Control | Keys.D))
             {
-                var dockForm = new SettingsForm();
-
-                if (dockForm.ShowDialog() == DialogResult.OK)
-                {
-                    InitWindowsSizes();
-                }
+                ShowDockForm();
             }
             else if (e.KeyData == (Keys.Control | Keys.T))
             {
-                var timerForm = new ChangeRestTimer();
-                timerForm.ShowDialog();
+                ShowTimeForm();
             }
             else if (e.KeyData == (Keys.Control | Keys.S))
             {
-                var soundForm = new ChangeRestSound();
-                soundForm.ShowDialog();
+                ShowRestSoundForm();
+            }
+        }
+
+        private void AdjustResttimerShortcutEvent(int change, bool add)
+        {
+            int m = Properties.Settings.Default.minsRestTime;
+            int s = Properties.Settings.Default.secondsRestTime;
+
+            var time = GetTimeFromAddSeconds(m, s, change, add);
+
+            bool didNotChange = false;
+            if (m == time.Item1 && s == time.Item2)
+                didNotChange = true;
+
+            Properties.Settings.Default.secondsRestTime = time.Item2;
+            Properties.Settings.Default.minsRestTime = time.Item1;
+
+            ShowMessagePopup(m, s, change, add, didNotChange);
+        }
+
+        private void ShowMessagePopup(int m, int s, int change, bool add, bool didNotChange)
+        {
+            if (!MessagePopupShown)
+            {
+                MessagePopupShown = true;
+                paPopup.Visible = true;
+                timerPopUp.Start();
+            }
+
+            ChangeMessagePopup(m, s, change, add, didNotChange);
+        }
+
+        Tuple<int, int> GetTimeFromAddSeconds(int m, int s, int change, bool add, bool allowNegative = false)
+        {
+            if (add)
+            {
+                //add when below 0
+                if (m < 0 || s < 0)
+                {
+                    if (s < - 15)
+                    {
+                        s += 15;
+                    }
+                    else
+                    {
+                        m++;
+                        s = 60 - change;
+                    }
+                }
+
+                //add when above 0
+                if (s < 45)
+                    s += change;
+                else
+                {
+                    m++;
+                    s += change - 60;
+                }
+            }
+            else
+            {
+                //subtract when below 0
+                if (!allowNegative)
+                {
+                    if (s >= change)
+                        s -= change;
+                    else
+                    {
+                        if (m != 0)
+                        {
+                            m--;
+                            s = s - change + 60;
+                        }
+                    }
+                }
+                else
+                {
+                    //subtract when above 0
+                    if (s == 0)
+                    {
+                        s = - change;
+                    }
+                    else if (s > -45 && s != 0)
+                        s -= change;
+                    else
+                    {
+                        m--;
+                        s = s - change + 60;
+                    }
+                }
+            }
+
+            return new Tuple<int, int>(m, s);
+        }
+
+        private void ChangeMessagePopup(int m, int s, int change, bool add, bool didNotChange)
+        {
+            CurrentPopupTime = 0;
+            PopupShowDuration = 30;
+
+            if (!didNotChange)
+            {
+                var time = GetTimeFromAddSeconds(PopupMinutesChange, PopupSecondsChange, change, add, true);
+
+                PopupMinutesChange = time.Item1;
+                PopupSecondsChange = time.Item2;
+
+                string sign = "";
+                if (PopupMinutesChange < 0 || PopupSecondsChange < 0)
+                {
+                    sign = "- ";
+                    laPopupRestTimerDiff.ForeColor = ColorManager.Instance.Error;
+
+                    string min;
+                    if (PopupMinutesChange < 0)
+                        min = (PopupMinutesChange * (-1)).ToString("00");
+                    else
+                        min = PopupMinutesChange.ToString("00");
+
+                    string sec;
+                    if (PopupSecondsChange < 0)
+                        sec = (PopupSecondsChange * (-1)).ToString("00");
+                    else
+                        sec = PopupSecondsChange.ToString("00");
+
+                    laPopupRestTimerDiff.Text = sign + min + ":" + sec ;
+                }
+                else
+                {
+                    sign = "+ ";
+                    laPopupRestTimerDiff.ForeColor = ColorManager.Instance.Green;
+                    laPopupRestTimerDiff.Text = sign + PopupMinutesChange.ToString("00") + ":" + PopupSecondsChange.ToString("00"); ;
+                }
+
+                laPopupRestTimer.Text = Properties.Settings.Default.minsRestTime.ToString("00") + ":" + Properties.Settings.Default.secondsRestTime.ToString("00");
+            }
+        }
+
+        private void ShowRestSoundForm()
+        {
+            var soundForm = new ChangeRestSound();
+            soundForm.ShowDialog();
+        }
+
+        private void ShowTimeForm()
+        {
+            var timerForm = new ChangeRestTimer();
+            timerForm.ShowDialog();
+        }
+
+        private void ShowDockForm()
+        {
+            var dockForm = new SettingsForm();
+
+            if (dockForm.ShowDialog() == DialogResult.OK)
+            {
+                InitWindowsSizes();
             }
         }
 
@@ -412,11 +625,13 @@ namespace HomeGymManager
             {
                 timerIsRunning = false;
                 pbTimeSymbol.Image = Properties.Resources.Timer_Stop;
+                pbTimer.Image = Properties.Resources.Timer_Stop_smaller;
             }
             else
             {
                 timerIsRunning = true;
                 pbTimeSymbol.Image = Properties.Resources.Timer;
+                pbTimer.Image = Properties.Resources.Timer_smaller;
             }
         }
 
@@ -467,30 +682,90 @@ namespace HomeGymManager
             }
         }
 
-        private void changeRestTimerSoundToolStripMenuItem_Click(object sender, EventArgs e)
+        private void pbSettings_MouseEnter(object sender, EventArgs e)
         {
-            var changeRestSound = new ChangeRestSound();
-            changeRestSound.ShowDialog();
+            var c = (Control)sender;
+            c.BackColor = ColorManager.Instance.DarkLighter;
         }
 
-        private void btTimer_Click(object sender, EventArgs e)
+        private void pbSettings_MouseLeave(object sender, EventArgs e)
         {
-
+            var c = (Control)sender;
+            c.BackColor = ColorManager.Instance.Dark;
         }
 
-        private void btTimer_MouseEnter(object sender, EventArgs e)
+        private void pbClose_MouseEnter(object sender, EventArgs e)
         {
-            btTimer.BackColor = ColorManager.Instance.DarkLighter;
+            pbClose.BackColor = ColorManager.Instance.Error;
         }
 
-        private void btTimer_MouseLeave(object sender, EventArgs e)
+        private void pbClose_MouseLeave(object sender, EventArgs e)
         {
-            btTimer.BackColor = ColorManager.Instance.Dark;
+            pbClose.BackColor = ColorManager.Instance.Dark;
         }
 
-        private void btClose_Click(object sender, EventArgs e)
+        private void pbClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void pbTimer_Click(object sender, EventArgs e)
+        {
+            SwitchTimer();
+        }
+
+        private void pbRecord_Click(object sender, EventArgs e)
+        {
+            SwitchRecording();
+        }
+
+        private void SwitchRecording()
+        {
+            if (!Recording)
+            {
+                Recording = true;
+
+                pbRecord.Image = Properties.Resources.StopRecording;
+            }
+            else
+            {
+                Recording = false;
+
+                pbRecord.Image = Properties.Resources.Record;
+            }
+        }
+
+        private void pbRestSound_Click(object sender, EventArgs e)
+        {
+            ShowRestSoundForm();
+        }
+
+        private void pbRestTimer_Click(object sender, EventArgs e)
+        {
+            ShowTimeForm(); 
+        }
+
+        private void pbDocking_Click(object sender, EventArgs e)
+        {
+            ShowDockForm();
+        }
+
+        private void timerPopUp_Tick(object sender, EventArgs e)
+        {
+            CurrentPopupTime += 1;
+
+            if (CurrentPopupTime == PopupShowDuration)
+            {
+                timerPopUp.Stop();
+                paPopup.Visible = false;
+                MessagePopupShown = false;
+                CurrentPopupTime = 0;
+                PopupMinutesChange = 0;
+                PopupSecondsChange = 0;
+
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+            }
         }
     }
 }
