@@ -91,6 +91,8 @@ namespace HomeGymManager
         public int CurrentPopupTime { get; private set; }
         public int PopupShowDuration { get; private set; }
         public List<Bitmap> ClipImages { get; private set; } = new List<Bitmap>();
+        public string ClipsFolderPath { get; private set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\HomeGymManager_Clips";
+        public string ClipsFolderPath_Today { get; private set; } = "";
 
         public HomeGymManagerForm()
         {
@@ -141,12 +143,6 @@ namespace HomeGymManager
             pbCam.Location = new Point(padding, padding);
             pbCam.Width = paPicture.Width - padding * 2;
             pbCam.Height = paPicture.Height - padding * 2;
-
-            int paClipsPadding = 3;
-
-            paClipsInner.Location = new Point(paClipsPadding, paClipsPadding);
-            paClipsInner.Width = paClipsPreview.Width - paClipsPadding * 2;
-            paClipsInner.Height = paClipsPreview.Height - paClipsPadding * 2;
         }
 
         private void InitWindowsSizes()
@@ -271,19 +267,6 @@ namespace HomeGymManager
 
             paPicture.BackColor = ColorManager.Instance.DarkLighter;
             paLower.BackColor = ColorManager.Instance.DarkLighter;
-
-            paClipsPreview.BackColor = ColorManager.Instance.Dark;
-            paClipsInner.BackColor = ColorManager.Instance.DarkLighter;
-
-            //other colors
-            //this.BackColor = ColorManager.Instance.DarkLighter;
-            //paTopMain.BackColor = ColorManager.Instance.Dark;
-            //paLeftMain.BackColor = ColorManager.Instance.Dark;
-            //paLeftMainTopCornerPadding.BackColor = ColorManager.Instance.Dark;
-            //paBottomMain.BackColor = ColorManager.Instance.DarkLighter;
-
-            //paPicture.BackColor = ColorManager.Instance.Medium;
-            //paLower.BackColor = ColorManager.Instance.Medium;
         }
 
         private void CaptureCamera()
@@ -352,19 +335,64 @@ namespace HomeGymManager
             }
         }
 
-        private string GetClipSavePath(string name)
+        private string GetClipSavePath(string name, string fileType, bool onlyFolderPath = false)
         {
-            if (name.StartsWith(@"\"))
+            string date = DateTime.Now.ToString("dd-MM-yyyy");
+
+            Directory.CreateDirectory(ClipsFolderPath);
+
+            if (ClipsFolderPath_Today == "")
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\HomeGymManager" + name;
+                ClipsFolderPath_Today = ClipsFolderPath + @"\" + date;
+                Directory.CreateDirectory(ClipsFolderPath_Today);
+            }
+
+            if (!onlyFolderPath)
+            {
+                if (name.StartsWith(@"\"))
+                {
+                    return GetFileNameIfWantedFileAlreadyExists(ClipsFolderPath_Today + name, fileType);
+                }
+                else
+                {
+                    return GetFileNameIfWantedFileAlreadyExists(ClipsFolderPath_Today + @"\" + name, fileType);
+                }
             }
             else
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\HomeGymManager\" + name;
+                return ClipsFolderPath_Today;
             }
         }
 
-        private void CreateMovie()
+        private string GetFileNameIfWantedFileAlreadyExists(string path, string fileType)
+        {
+            if (File.Exists(path + fileType))
+            {
+                bool newPathFound = false;
+                int i = 1;
+
+                string newPath = "";
+                while (!newPathFound)
+                {
+                    newPath = path + " (" + i.ToString() + ")" + fileType;
+
+                    if (!File.Exists(newPath))
+                    {
+                        newPathFound = true;
+                    }
+
+                    i++;
+                }
+
+                return newPath;
+            }
+            else
+            {
+                return path + fileType;
+            }
+        }
+
+        private void CreateClip()
         {
             int width = ClipImages[0].Width;
             int height = ClipImages[0].Height;
@@ -372,10 +400,21 @@ namespace HomeGymManager
             // create instance of video writer
             using (var writer = new VideoFileWriter())
             {
-                writer.Open(GetClipSavePath("test.avi"), width, height, 30, VideoCodec.MPEG4);
+                string time = DateTime.Now.ToString("HH_mm");
+
+                writer.Open(GetClipSavePath(time, ".avi"), width, height, 25, VideoCodec.MPEG4);
+
+                int i = 0;
 
                 foreach (var image in ClipImages)
                 {
+                    i++;
+                    if (i == 25)
+                    {
+                        Application.DoEvents();
+                        i = 0;
+                    }
+
                     writer.WriteVideoFrame(image);
                 }
 
@@ -713,26 +752,12 @@ namespace HomeGymManager
         {
             var c = (Control)sender;
             c.BackColor = ColorManager.Instance.DarkLighter;
-
-            var pb = (PictureBox)sender;
-            if (pb.Tag?.ToString() == "Clips")
-            {
-                paClipsPreview.Visible = true;
-                paClipsInner.Visible = true;
-            }
         }
 
         private void pbSettings_MouseLeave(object sender, EventArgs e)
         {
             var c = (Control)sender;
             c.BackColor = ColorManager.Instance.Dark;
-
-            var pb = (PictureBox)sender;
-            if (pb.Tag?.ToString() == "Clips")
-            {
-                paClipsPreview.Visible = false;
-                paClipsInner.Visible = false;
-            }
         }
 
         private void pbClose_MouseEnter(object sender, EventArgs e)
@@ -767,6 +792,13 @@ namespace HomeGymManager
                 Recording = true;
 
                 pbRecord.Image = Properties.Resources.StopRecording;
+
+                try
+                {
+                    pbCam.Refresh();
+                }
+                catch (Exception) { }
+
             }
             else
             {
@@ -774,7 +806,13 @@ namespace HomeGymManager
 
                 pbRecord.Image = Properties.Resources.Record;
 
-                CreateMovie();
+                try
+                {
+                    pbCam.Refresh();
+                }
+                catch (Exception) { }
+
+                CreateClip();
             }
         }
 
@@ -806,6 +844,23 @@ namespace HomeGymManager
 
                 Properties.Settings.Default.Save();
                 Properties.Settings.Default.Reload();
+            }
+        }
+
+        private void pbClips_Click(object sender, EventArgs e)
+        {
+            Process.Start(GetClipSavePath("", "", true));
+        }
+
+        private void pbCam_Paint(object sender, PaintEventArgs e)
+        {
+            if (Recording)
+            {
+                ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle,
+                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
+                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
+                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
+                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid);
             }
         }
     }

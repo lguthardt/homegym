@@ -69,8 +69,6 @@
             this.pbTimer = new System.Windows.Forms.PictureBox();
             this.paLeftMainTopCornerPadding = new System.Windows.Forms.Panel();
             this.timerPopUp = new System.Windows.Forms.Timer(this.components);
-            this.paClipsPreview = new System.Windows.Forms.Panel();
-            this.paClipsInner = new System.Windows.Forms.Panel();
             this.paPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCornerTopLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
@@ -92,13 +90,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).BeginInit();
-            this.paClipsPreview.SuspendLayout();
             this.SuspendLayout();
             // 
             // paPicture
             // 
             this.paPicture.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.paPicture.Controls.Add(this.paClipsPreview);
             this.paPicture.Controls.Add(this.pbCornerTopLeft);
             this.paPicture.Controls.Add(this.pbLoading);
             this.paPicture.Controls.Add(this.pbCam);
@@ -134,13 +130,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbCam.BackColor = System.Drawing.Color.Transparent;
-            this.pbCam.Location = new System.Drawing.Point(13, 26);
+            this.pbCam.Location = new System.Drawing.Point(6, 41);
             this.pbCam.Name = "pbCam";
             this.pbCam.Size = new System.Drawing.Size(695, 578);
             this.pbCam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCam.TabIndex = 0;
             this.pbCam.TabStop = false;
             this.pbCam.SizeChanged += new System.EventHandler(this.pbCam_SizeChanged);
+            this.pbCam.Paint += new System.Windows.Forms.PaintEventHandler(this.pbCam_Paint);
             // 
             // actionsToolStripMenuItem
             // 
@@ -180,23 +177,23 @@
             this.paPopup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.paPopup.BackColor = System.Drawing.Color.Transparent;
             this.paPopup.BackgroundImage = global::HomeGymManager.Properties.Resources.Popup;
-            this.paPopup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.paPopup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.paPopup.Controls.Add(this.laPopupRestTimer);
             this.paPopup.Controls.Add(this.laPopupText);
-            this.paPopup.Location = new System.Drawing.Point(542, 26);
+            this.paPopup.Location = new System.Drawing.Point(492, 18);
             this.paPopup.Name = "paPopup";
-            this.paPopup.Size = new System.Drawing.Size(187, 76);
+            this.paPopup.Size = new System.Drawing.Size(237, 76);
             this.paPopup.TabIndex = 5;
             this.paPopup.Visible = false;
             // 
             // laPopupRestTimer
             // 
             this.laPopupRestTimer.AutoSize = true;
-            this.laPopupRestTimer.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laPopupRestTimer.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.laPopupRestTimer.ForeColor = System.Drawing.Color.Silver;
-            this.laPopupRestTimer.Location = new System.Drawing.Point(114, 28);
+            this.laPopupRestTimer.Location = new System.Drawing.Point(147, 29);
             this.laPopupRestTimer.Name = "laPopupRestTimer";
-            this.laPopupRestTimer.Size = new System.Drawing.Size(44, 18);
+            this.laPopupRestTimer.Size = new System.Drawing.Size(49, 19);
             this.laPopupRestTimer.TabIndex = 3;
             this.laPopupRestTimer.Text = "01:00";
             this.laPopupRestTimer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -204,11 +201,11 @@
             // laPopupText
             // 
             this.laPopupText.AutoSize = true;
-            this.laPopupText.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laPopupText.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.laPopupText.ForeColor = System.Drawing.Color.Silver;
-            this.laPopupText.Location = new System.Drawing.Point(28, 28);
+            this.laPopupText.Location = new System.Drawing.Point(47, 29);
             this.laPopupText.Name = "laPopupText";
-            this.laPopupText.Size = new System.Drawing.Size(80, 18);
+            this.laPopupText.Size = new System.Drawing.Size(84, 19);
             this.laPopupText.TabIndex = 2;
             this.laPopupText.Text = "Rest Timer";
             this.laPopupText.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -292,6 +289,7 @@
             this.pbThumosLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbThumosLogo.TabIndex = 1;
             this.pbThumosLogo.TabStop = false;
+            this.pbThumosLogo.Visible = false;
             // 
             // laMotivationText
             // 
@@ -304,6 +302,7 @@
             this.laMotivationText.TabIndex = 0;
             this.laMotivationText.Text = "High Thumos!";
             this.laMotivationText.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.laMotivationText.Visible = false;
             // 
             // timer
             // 
@@ -461,6 +460,7 @@
             this.pbClips.TabIndex = 13;
             this.pbClips.TabStop = false;
             this.pbClips.Tag = "Clips";
+            this.pbClips.Click += new System.EventHandler(this.pbClips_Click);
             this.pbClips.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
             this.pbClips.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
             // 
@@ -504,23 +504,6 @@
             // timerPopUp
             // 
             this.timerPopUp.Tick += new System.EventHandler(this.timerPopUp_Tick);
-            // 
-            // paClipsPreview
-            // 
-            this.paClipsPreview.Controls.Add(this.paClipsInner);
-            this.paClipsPreview.Location = new System.Drawing.Point(0, 156);
-            this.paClipsPreview.Name = "paClipsPreview";
-            this.paClipsPreview.Size = new System.Drawing.Size(228, 457);
-            this.paClipsPreview.TabIndex = 5;
-            this.paClipsPreview.Visible = false;
-            // 
-            // paClipsInner
-            // 
-            this.paClipsInner.Location = new System.Drawing.Point(20, 52);
-            this.paClipsInner.Name = "paClipsInner";
-            this.paClipsInner.Size = new System.Drawing.Size(132, 177);
-            this.paClipsInner.TabIndex = 0;
-            this.paClipsInner.Visible = false;
             // 
             // HomeGymManagerForm
             // 
@@ -566,7 +549,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbClips)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).EndInit();
-            this.paClipsPreview.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -612,8 +594,6 @@
         private System.Windows.Forms.Label laPopupRestTimer;
         private System.Windows.Forms.Label laPopupText;
         private System.Windows.Forms.Timer timerPopUp;
-        private System.Windows.Forms.Panel paClipsPreview;
-        private System.Windows.Forms.Panel paClipsInner;
     }
 }
 
