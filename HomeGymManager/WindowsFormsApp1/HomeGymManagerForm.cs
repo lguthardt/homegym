@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
+using AForge.Video;
+using Accord.Video.FFMPEG;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace HomeGymManager
 {
@@ -68,6 +72,8 @@ namespace HomeGymManager
         bool isCameraRunning;
         bool cameraStarted;
 
+        public int FrameRate { get; private set; }
+
         int mins_RestTimer;
         int seconds_RestTimer;
 
@@ -84,6 +90,7 @@ namespace HomeGymManager
         public bool MessagePopupShown { get; private set; }
         public int CurrentPopupTime { get; private set; }
         public int PopupShowDuration { get; private set; }
+        public List<Bitmap> ClipImages { get; private set; } = new List<Bitmap>();
 
         public HomeGymManagerForm()
         {
@@ -134,14 +141,17 @@ namespace HomeGymManager
             pbCam.Location = new Point(padding, padding);
             pbCam.Width = paPicture.Width - padding * 2;
             pbCam.Height = paPicture.Height - padding * 2;
+
+            int paClipsPadding = 3;
+
+            paClipsInner.Location = new Point(paClipsPadding, paClipsPadding);
+            paClipsInner.Width = paClipsPreview.Width - paClipsPadding * 2;
+            paClipsInner.Height = paClipsPreview.Height - paClipsPadding * 2;
         }
 
         private void InitWindowsSizes()
         {
-            if (Properties.Settings.Default.autoDock)
-            {
-                SetThisProgramAndOtherProgramSizeLocation();
-            }
+            SetThisProgramAndOtherProgramSizeLocation();
         }
 
         private Size GetThisWindowSize()
@@ -193,7 +203,10 @@ namespace HomeGymManager
             this.Height = GetThisWindowSize().Height;
             this.Location = GetThisWindowLocation();
 
-            SetOtherProgramSizeLocation();
+            if (Properties.Settings.Default.autoDock)
+            {
+                SetOtherProgramSizeLocation();
+            }
         }
 
         private void SetOtherProgramSizeLocation()
@@ -259,6 +272,9 @@ namespace HomeGymManager
             paPicture.BackColor = ColorManager.Instance.DarkLighter;
             paLower.BackColor = ColorManager.Instance.DarkLighter;
 
+            paClipsPreview.BackColor = ColorManager.Instance.Dark;
+            paClipsInner.BackColor = ColorManager.Instance.DarkLighter;
+
             //other colors
             //this.BackColor = ColorManager.Instance.DarkLighter;
             //paTopMain.BackColor = ColorManager.Instance.Dark;
@@ -287,7 +303,10 @@ namespace HomeGymManager
                 while (isCameraRunning)
                 {
                     if (!loadingScreenHidden)
+                    {
                         cameraStarted = true;
+                        FrameRate = (int)capture.Fps;
+                    }
 
                     try
                     {
@@ -316,6 +335,11 @@ namespace HomeGymManager
 
                     try
                     {
+                        if (Recording)
+                        {
+                            ClipImages.Add(new Bitmap(image));
+                        }
+
                         cameraImageHeight = image.Height;
                         cameraImageWidth = image.Width;
                         pbCam.Image = image;
@@ -325,6 +349,38 @@ namespace HomeGymManager
                         //catch error that causes outdated winforms
                     }
                 }
+            }
+        }
+
+        private string GetClipSavePath(string name)
+        {
+            if (name.StartsWith(@"\"))
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\HomeGymManager" + name;
+            }
+            else
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\HomeGymManager\" + name;
+            }
+        }
+
+        private void CreateMovie()
+        {
+            int width = ClipImages[0].Width;
+            int height = ClipImages[0].Height;
+
+            // create instance of video writer
+            using (var writer = new VideoFileWriter())
+            {
+                writer.Open(GetClipSavePath("test.avi"), width, height, 30, VideoCodec.MPEG4);
+
+                foreach (var image in ClipImages)
+                {
+                    writer.WriteVideoFrame(image);
+                }
+
+                ClipImages.Clear();
+                writer.Close();
             }
         }
 
@@ -657,12 +713,26 @@ namespace HomeGymManager
         {
             var c = (Control)sender;
             c.BackColor = ColorManager.Instance.DarkLighter;
+
+            var pb = (PictureBox)sender;
+            if (pb.Tag?.ToString() == "Clips")
+            {
+                paClipsPreview.Visible = true;
+                paClipsInner.Visible = true;
+            }
         }
 
         private void pbSettings_MouseLeave(object sender, EventArgs e)
         {
             var c = (Control)sender;
             c.BackColor = ColorManager.Instance.Dark;
+
+            var pb = (PictureBox)sender;
+            if (pb.Tag?.ToString() == "Clips")
+            {
+                paClipsPreview.Visible = false;
+                paClipsInner.Visible = false;
+            }
         }
 
         private void pbClose_MouseEnter(object sender, EventArgs e)
@@ -703,6 +773,8 @@ namespace HomeGymManager
                 Recording = false;
 
                 pbRecord.Image = Properties.Resources.Record;
+
+                CreateMovie();
             }
         }
 

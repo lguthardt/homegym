@@ -69,6 +69,8 @@
             this.pbTimer = new System.Windows.Forms.PictureBox();
             this.paLeftMainTopCornerPadding = new System.Windows.Forms.Panel();
             this.timerPopUp = new System.Windows.Forms.Timer(this.components);
+            this.paClipsPreview = new System.Windows.Forms.Panel();
+            this.paClipsInner = new System.Windows.Forms.Panel();
             this.paPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCornerTopLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
@@ -90,11 +92,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).BeginInit();
+            this.paClipsPreview.SuspendLayout();
             this.SuspendLayout();
             // 
             // paPicture
             // 
             this.paPicture.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.paPicture.Controls.Add(this.paClipsPreview);
             this.paPicture.Controls.Add(this.pbCornerTopLeft);
             this.paPicture.Controls.Add(this.pbLoading);
             this.paPicture.Controls.Add(this.pbCam);
@@ -456,6 +460,7 @@
             this.pbClips.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbClips.TabIndex = 13;
             this.pbClips.TabStop = false;
+            this.pbClips.Tag = "Clips";
             this.pbClips.MouseEnter += new System.EventHandler(this.pbSettings_MouseEnter);
             this.pbClips.MouseLeave += new System.EventHandler(this.pbSettings_MouseLeave);
             // 
@@ -499,6 +504,23 @@
             // timerPopUp
             // 
             this.timerPopUp.Tick += new System.EventHandler(this.timerPopUp_Tick);
+            // 
+            // paClipsPreview
+            // 
+            this.paClipsPreview.Controls.Add(this.paClipsInner);
+            this.paClipsPreview.Location = new System.Drawing.Point(0, 156);
+            this.paClipsPreview.Name = "paClipsPreview";
+            this.paClipsPreview.Size = new System.Drawing.Size(228, 457);
+            this.paClipsPreview.TabIndex = 5;
+            this.paClipsPreview.Visible = false;
+            // 
+            // paClipsInner
+            // 
+            this.paClipsInner.Location = new System.Drawing.Point(20, 52);
+            this.paClipsInner.Name = "paClipsInner";
+            this.paClipsInner.Size = new System.Drawing.Size(132, 177);
+            this.paClipsInner.TabIndex = 0;
+            this.paClipsInner.Visible = false;
             // 
             // HomeGymManagerForm
             // 
@@ -544,6 +566,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbClips)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRecord)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimer)).EndInit();
+            this.paClipsPreview.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -589,6 +612,8 @@
         private System.Windows.Forms.Label laPopupRestTimer;
         private System.Windows.Forms.Label laPopupText;
         private System.Windows.Forms.Timer timerPopUp;
+        private System.Windows.Forms.Panel paClipsPreview;
+        private System.Windows.Forms.Panel paClipsInner;
     }
 }
 
