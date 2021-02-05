@@ -31,7 +31,6 @@
             this.laTimerGeneral = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.laDockDescription = new System.Windows.Forms.Label();
             this.cbSound = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btCancel = new System.Windows.Forms.Button();
@@ -69,35 +68,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Controls.Add(this.laDockDescription);
             this.panel2.Controls.Add(this.cbSound);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(608, 378);
+            this.panel2.Size = new System.Drawing.Size(608, 309);
             this.panel2.TabIndex = 4;
-            // 
-            // laDockDescription
-            // 
-            this.laDockDescription.AutoSize = true;
-            this.laDockDescription.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laDockDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.laDockDescription.Location = new System.Drawing.Point(50, 206);
-            this.laDockDescription.MaximumSize = new System.Drawing.Size(450, 0);
-            this.laDockDescription.Name = "laDockDescription";
-            this.laDockDescription.Size = new System.Drawing.Size(445, 63);
-            this.laDockDescription.TabIndex = 11;
-            this.laDockDescription.Text = "More features are planned, so you can select the sound of a few default sounds or" +
-    " even pick your own sound from your PC";
-            this.laDockDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cbSound
             // 
             this.cbSound.AutoSize = true;
             this.cbSound.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSound.ForeColor = System.Drawing.Color.LightGray;
-            this.cbSound.Location = new System.Drawing.Point(54, 175);
+            this.cbSound.Location = new System.Drawing.Point(47, 182);
             this.cbSound.Name = "cbSound";
             this.cbSound.Size = new System.Drawing.Size(406, 28);
             this.cbSound.TabIndex = 9;
@@ -110,7 +94,7 @@
             this.panel3.Controls.Add(this.btCancel);
             this.panel3.Controls.Add(this.btOk);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 319);
+            this.panel3.Location = new System.Drawing.Point(0, 250);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(608, 59);
             this.panel3.TabIndex = 7;
@@ -149,16 +133,16 @@
             this.btOk.MouseEnter += new System.EventHandler(this.btOk_MouseEnter);
             this.btOk.MouseLeave += new System.EventHandler(this.btOk_MouseLeave);
             // 
-            // ChangeRestSound
+            // ChangeRestSoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(614, 384);
+            this.ClientSize = new System.Drawing.Size(614, 315);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Name = "ChangeRestSound";
+            this.Name = "ChangeRestSoundForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChangeRestTimer";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChangeRestSound_KeyDown);
@@ -180,6 +164,5 @@
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Button btOk;
         private System.Windows.Forms.CheckBox cbSound;
-        private System.Windows.Forms.Label laDockDescription;
     }
 }

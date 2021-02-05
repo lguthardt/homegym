@@ -85,6 +85,8 @@ namespace HomeGymManager
         bool loadingScreenHidden;
         private int cameraImageHeight;
         private int cameraImageWidth;
+        private int mins_Recording;
+        private int seconds_Recording;
 
         public bool Recording { get; private set; }
         public bool MessagePopupShown { get; private set; }
@@ -140,9 +142,9 @@ namespace HomeGymManager
 
             paLeftMainTopCornerPadding.Height = padding;
 
-            pbCam.Location = new Point(padding, padding);
-            pbCam.Width = paPicture.Width - padding * 2;
-            pbCam.Height = paPicture.Height - padding * 2;
+            pbCam.Location = new Point(20, 20);
+            pbCam.Width = paPicture.Width - 20 * 2;
+            pbCam.Height = paPicture.Height - 20 * 2;
         }
 
         private void InitWindowsSizes()
@@ -402,7 +404,12 @@ namespace HomeGymManager
             {
                 string time = DateTime.Now.ToString("HH_mm");
 
-                writer.Open(GetClipSavePath(time, ".avi"), width, height, 25, VideoCodec.MPEG4);
+                var hours = time.Substring(0, time.IndexOf("_"));
+                var mins = time.Substring(time.IndexOf("_"));
+
+                string path = hours + "h" + mins + "m";
+
+                writer.Open(GetClipSavePath(path, ".avi"), width, height, 25, VideoCodec.MPEG4);
 
                 int i = 0;
 
@@ -504,6 +511,11 @@ namespace HomeGymManager
             if (e.KeyCode == Keys.Space)
             {
                 SwitchTimer();
+
+                if (Recording)
+                {
+                    SwitchRecording();
+                }
             }
             else if (e.KeyData == (Keys.Control | Keys.Oemplus))
             {
@@ -790,27 +802,23 @@ namespace HomeGymManager
             if (!Recording)
             {
                 Recording = true;
-
                 pbRecord.Image = Properties.Resources.StopRecording;
+                pbRecSign.Visible = true;
+                laRecordingTimer.Visible = true;
 
-                try
-                {
-                    pbCam.Refresh();
-                }
-                catch (Exception) { }
-
+                laRecordingTimer.Text = mins_Recording.ToString("00") + ":" + seconds_Recording.ToString("00");
+                timerRecording.Start();
             }
             else
             {
                 Recording = false;
-
                 pbRecord.Image = Properties.Resources.Record;
+                pbRecSign.Visible = false;
+                laRecordingTimer.Visible = false;
 
-                try
-                {
-                    pbCam.Refresh();
-                }
-                catch (Exception) { }
+                seconds_Recording = 0;
+                mins_Recording = 0;
+                timerRecording.Stop();
 
                 CreateClip();
             }
@@ -852,16 +860,19 @@ namespace HomeGymManager
             Process.Start(GetClipSavePath("", "", true));
         }
 
-        private void pbCam_Paint(object sender, PaintEventArgs e)
+        private void timerRecording_Tick(object sender, EventArgs e)
         {
-            if (Recording)
+            if (seconds_Recording != 59)
             {
-                ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle,
-                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
-                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
-                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid,
-                      ColorManager.Instance.Error, 2, ButtonBorderStyle.Solid);
+                seconds_Recording++;
             }
+            else
+            {
+                mins_Recording++;
+                seconds_Recording = 0;
+            }
+
+            laRecordingTimer.Text = mins_Recording.ToString("00") + ":" + seconds_Recording.ToString("00");
         }
     }
 }

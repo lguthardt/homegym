@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mixed.ico" />
+    <None Include="Resources\RecSign.png" />
     <None Include="Resources\Popup.png" />
     <None Include="Resources\Docking.png" />
     <None Include="Resources\Sound.png" />
@@ -148,7 +149,6 @@
     <None Include="Resources\Record.png" />
     <None Include="Resources\Clips.png" />
     <None Include="Resources\StopRecording.png" />
-    <None Include="Resources\RecSign.png" />
     <None Include="Resources\Settings.png" />
     <None Include="Resources\Timer_Stop_smaller.png" />
     <None Include="Resources\Timer_smaller.png" />
